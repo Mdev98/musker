@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .notification {
+            font-family: 'Space mono';
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            color: #111;
+            padding: 20px 40px;
+            transform: translateY(30px);
+            visibility: hidden;
+            opacity: 0;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.403);
+            animation: fade 4s ease-in forwards;
+            background-color: #3250bf;
+            color: #fff;
+        }
+
+        .progress_bar {
+            position: absolute;
+            display: inline-block;
+            width: 100%;
+            height: 4px;
+            background-image: linear-gradient(to right, #539bdb, #3250bf);
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: fill 3s .5s ease-in;
+        }
+
+        @keyframes fade {
+            5% {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            90% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fill {
+            to {
+                transform: scaleX(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notification">
+
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+        <span class="progress_bar"></span>
+    </div>
+</body>
+</html>

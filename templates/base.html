@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/d91c5a9a87.js" crossorigin="anonymous"></script>
+        <title>Musk</title>
+        <style>
+
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: 'Montserrat', sans-serif;
+                overflow: hidden;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .btn {
+                padding: 10px 30px;
+                border-radius: 20px;
+                color: #fff;
+                font-weight: 500;
+            }
+
+            .btn_auth {
+                box-shadow: 0px 0px 5px 146C94;
+                border-radius: 1px;
+                color: #146C94;
+                font-size: 1.2rem;
+                background-color: #fff;
+                margin: 0px 50px;
+            }
+
+            .musk_btn {
+                border-radius: 0px;
+                background-color: #19A7CE;
+                font-size: 1.2rem;
+                font-weight: 500;
+                color: #fff;
+                border: none;
+                outline: none;
+            }
+
+
+            .tweet_action {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            main {
+                width: 100%;
+                height: 100vh;
+            }
+
+            #welcome {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                width: 100%;
+                height: 100%;
+            }
+
+            #welcome h1 {
+                font-size: 5rem;
+            }
+
+            .authentication {
+                margin: 40px 0px;
+            }
+
+            .wrapper {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                padding: 20px 40px;
+            }
+
+            #profile-section {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .profile {
+                display: flex;
+                align-items: center;
+            }
+
+            .profile p {
+                margin-right: 30px;
+            }
+
+            .logout-btn {
+                background-color: #ff0000;
+                font-weight: bold;
+                text-transform: lowercase;
+            }
+
+            .logo {
+                width: 75px;
+                height: 75px;
+            }
+
+            .logo img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            #tweet-section {
+                flex: 3;
+                padding-top: 70px;
+                border-left: .5px solid #f1f1f1;
+                border-right: .5px solid #f1f1f1;
+                position: relative;
+                overflow: scroll;
+            }
+
+            .tweet {
+                padding: 10px 80px;
+                border: .5px solid #f1f1f1;
+                transition: background .2s ease;
+            }
+
+            #all-tweet .tweet:hover {
+                background-color: #f1f1f1;
+            }
+
+            .tweet_stats {
+                padding: 10px 80px;
+                display: flex;
+                justify-content: space-between;
+                border: .5px solid #f1f1f1;
+            }
+
+            .tweet_author {
+                font-weight: bold;
+                position: relative;
+            }
+
+            .tweet_body {
+                margin: 10px 0px;
+            }
+
+            .tweet_date {
+                font-weight: lighter;
+                color: #11111174;
+                font-size: .9rem;
+            }
+
+            .comment {
+                padding: 10px 80px;
+                border: .5px solid #f1f1f1;
+            }
+
+            .comment_author {
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+            }
+
+            .comment_author > * {
+                margin-right: 5px;
+            }
+
+            .comment_body {
+                margin: 10px 0px;
+            }
+
+            .comment_date {
+                font-weight: lighter;
+                color: #11111174;
+                font-size: .9rem;
+            }
+
+            .comment_input {
+                width: 85%;
+                padding: 10px 40px;
+                border: none;
+                outline: none;
+                font-size: 1.3rem;
+            }
+
+            .comment_btn {
+                padding: 15px;
+                border-radius: 0px;
+                background-color: #19A7CE;
+                font-size: 1rem;
+                font-weight: 500;
+                border: none;
+                outline: none;
+            }
+
+            #action-section {
+                flex: 2;
+            }
+
+
+            #action-section .profile {
+                width: fit-content;
+                margin: auto;
+                padding: 50px;
+                box-shadow: 0px 0px 5px #19A7CE;
+            }
+
+            
+
+            #action-section .follower-group {
+                width: fit-content;
+                margin: auto;
+                padding: 50px;
+                box-shadow: 0px 0px 5px #19A7CE;
+            }
+
+            #action-section .follower {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            #action-section .follower:last-child {
+                margin-bottom: 0px;
+            }
+
+            #action-section .profile p {
+                margin-right: 0px;
+            }
+            
+            .follow-btn {
+                padding: 10px 30px;
+                border-radius: 1px;
+                margin-left: 30px;
+            }
+
+            textarea {
+                width: 100%;
+                height: 100px;
+                padding: 12px 20px;
+                box-sizing: border-box;
+                border: 2px solid #f1f1f1;
+                border-radius: 4px;
+                background-color: #f8f8f8;
+                font-size: 1.2rem;
+                resize: none;
+            }
+
+            .sign {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                background-color: #19A7CE;
+            }
+
+            .sign form {
+                background-color: #f2f2f2;
+                padding: 20px;
+                border-radius: 5px;
+                width: 400px;
+            }
+
+            .sign label, input {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .sign input {
+                padding: 10px;
+                border-radius: 5px;
+                border: none;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .sign .btn {
+                background-color: #146C94;
+                font-weight: 500;
+                font-size: 1.2rem;
+            }
+        </style>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% include './notification/notification.html' %}
+            {% endif %}
+        {% endwith %}
+
+        <main>
+            {% block content %}
+
+            {% endblock %}
+        </main>
+        
+        
+    </body>
+    <script>
+        links = document.querySelectorAll('.likes')
+        follows = document.querySelectorAll('.follow-btn')
+        tweets = document.querySelectorAll('#all-tweet .tweet')
+        len = tweets.length
+
+        tweets.forEach((tweet) => {
+            tweet.addEventListener('click', () => {
+                const urlString = tweet.querySelector('.likes').href
+                const paramString = urlString.split('?')[1]
+                const queryString = new URLSearchParams(paramString);
+                const id = queryString.get('id')
+
+                window.location.href = `/tweet/${id}`
+            })
+        })
+
+        links.forEach(link => {
+            link.addEventListener("click", () => {
+                event.preventDefault()
+                logJsonData(link)
+            })
+        });
+
+
+        follows.forEach(follow => {
+            follow.addEventListener("click", () => {
+                event.preventDefault()
+                logJsonData(follow)
+            })
+        });
+
+
+
+        async function logJsonData(link) {
+            const response = await fetch(link.href, {method : "PUT"})
+            const jsonData = await response.json();
+            location.reload();
+        }
+
+    </script>
+</html>

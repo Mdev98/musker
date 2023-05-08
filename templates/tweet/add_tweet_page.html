@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action="{{url_for('add_tweet')}}" method="POST" novalidate>
+        {{ form.csrf_token }}
+
+        <div>
+            <p>{{form.body}}</p>
+            
+            {% if form.body.errors %}
+                <p>
+                    {% for error in form.body.errors %}
+                        <span>{{error}}</span>
+                    {% endfor %}
+                </p>
+            {% endif%}
+        </div>
+
+        {{ form.submit }}
+    </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='body') }}
+{% endblock %}

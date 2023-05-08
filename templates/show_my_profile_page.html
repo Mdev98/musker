@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div>
+        <p>{{user.username}}</p>
+        
+        <p><strong>Join at</strong> : {{user.created_at.strftime('%B %Y')}}</p>
+
+        <p>{{user.count_following()}} <strong>Abonnements</strong> {{user.count_follower()}} <strong>Abonnés</strong></p>        
+    </div>
+
+    <div>
+        {% if user.tweet %}
+            
+            {% for tweet in user.tweet %}
+
+            <div style="width: 500px; margin: 40px auto; box-shadow: 0px 0px 5px rgba(140, 161, 255, 0.5); padding: 10px;">
+                <p style="display: flex; justify-content: space-between;">
+                    <span style="font-weight: lighter;">{{ tweet.author.username }}</span>
+                    <span style="font-weight: lighter;">{{ tweet.created_at.strftime('%Y-%m-%d') }}</span>
+                </p>
+                <p style="margin: 20px 0px; font-weight: bold; font-size: 1.3rem;">{{ tweet.body }}</p>
+                
+            </div>
+            {% endfor %}
+            
+        {% else %}
+            <p>You haven't tweet yet</p>
+        {% endif%}
+    </div>
+
+{% endblock %}

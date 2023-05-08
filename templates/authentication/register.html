@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="sign">
+
+    <form action="{{url_for('register')}}" method="POST" novalidate>
+
+        {{ form.csrf_token }}
+    
+        <div class="field">
+            {{ form.username.label }} {{ form.username }}
+            {% if form.username.errors %}
+            <ul class="error-list">
+                {% for error in form.username.errors %}
+                <li>
+                    <span class="error">{{ error }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+    
+            {% endif %}
+        </div>
+    
+        <div class="field">
+            <p>{{form.email.label}} {{form.email}}</p>
+    
+            {% if form.email.errors %}
+            <ul class="error-list">
+                {% for error in form.username.errors %}
+                <li>
+                    <span class="error">{{ error }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif%}
+        </div>
+    
+        <div class="field">
+            {{ form.password.label }} {{ form.password }}
+            {% if form.password.errors %}
+            <ul class="error-list">
+                {% for error in form.password.errors %}
+                <li>
+                    <span class="error">{{ error }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+    
+            {% endif %}
+        </div>
+    
+        {{ form.submit(class="btn login_btn") }}
+    
+    
+    </form>
+
+</section>
+
+{% endblock %}

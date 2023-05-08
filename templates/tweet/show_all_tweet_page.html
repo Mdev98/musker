@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="wrapper" id="all-tweet">
+        <section id="profile-section">
+            <div class="logo">
+                <img src="../../static/images/musk-logo.png" alt="">
+            </div>
+
+            <div class="profile">
+                <p>
+                    <span style="text-transform: capitalize; font-weight: bold; display: block;">{{ current_user.username }}</span>
+                    <a href="{{ url_for('profile', username=current_user.username) }}" style="font-weight: lighter; color: #11111185;">@{{ current_user.username }}</a>
+                </p>
+                <a href="{{ url_for('logout') }}" class="btn logout-btn">Logout</a>
+            </div>
+        </section>
+        <section id="tweet-section">
+
+            {% for tweet in tweets %}
+                <div class="tweet">
+                    <p class="tweet_author">
+                        <a href="{{ url_for('profile', username=tweet.author.username) }}">@{{ tweet.author.username }}</a> 
+                        <span class="tweet_date">{{ tweet.created_at.strftime('%I:%S %p - %d %b %Y') }}</span>
+                        <i class="fa-solid fa-ellipsis" style="position: absolute; right: 0;"></i>
+                    </p>
+
+                    <p class="tweet_body">{{ tweet.body }}</p>
+
+                    <p class="tweet_action" style="z-index: 100;">
+                        {% if tweet.is_liked(current_user.id) %}
+                            <a href="{{ url_for('remove_like', id=tweet.id) }}" class="likes">
+                                <i class="fa-solid fa-heart" style="color: red"></i>
+                                <span>{{ tweet.count_likes() }}</span>
+                            </a>
+                        {% else %}
+                            <a href="{{ url_for('add_like', id=tweet.id) }}" class="likes">
+                                <i class="fa fa-heart-o" style="color: red"></i>
+                                <span>{{ tweet.count_likes() }}</span>
+                            </a>
+                        {% endif %}
+                        <a href="{{url_for('show_tweet_details', id=tweet.id )}}"> 
+                            <i class="fa fa-comment-o"></i>
+                            <span>{{ tweet.count_comments() }}</span>
+                        </a>
+                        {% if current_user == tweet.author %}
+                            <a href="{{ url_for('delete_tweet', id=tweet.id) }}">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        {% endif %}
+                    </p>
+                </div>
+            {% endfor %}
+        </section>
+
+        <section id="make-tweet-section">
+            <form action="{{url_for('add_tweet')}}" method="POST" novalidate>
+                {{ musk_form.csrf_token }}
+
+                <div class="field">
+                    {{musk_form.body}}
+                    
+                    {% if musk_form.body.errors %}
+                        {% for error in musk_form.body.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    {% endif%}
+                </div>
+
+                {{ musk_form.submit(class='btn musk_btn') }}
+                
+            </form>
+        </section>
+    </div>
+    
+{% endblock %}

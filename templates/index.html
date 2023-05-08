@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    
+        <section id="welcome" style="background-color: #19A7CE;">
+
+            <h1 style="color: #fff">Welcome to Musker</h1>
+
+            <div class="authentication">
+                <a href="{{ url_for('register') }}" class="btn btn_auth">Register</a>
+                <a href="{{ url_for('login') }}" class="btn btn_auth">Login</a>
+            </div>
+    
+            
+    
+        </section>
+    
+    
+
+    {% if current_user.is_authenticated %}
+            {% include './notification/notification.html' %}
+    {% endif %}
+{% endblock %}

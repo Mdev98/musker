@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <div class="wrapper">
+        <section id="profile-section">
+            <div class="logo">
+                <img src="../../static/images/musk-logo.png" alt="">
+            </div>
+    
+            <div class="profile">
+                <p>
+                    <span style="text-transform: capitalize; font-weight: bold; display: block;">{{ current_user.username }}</span>
+                    <a href="{{ url_for('profile', username=current_user.username) }}" style="font-weight: lighter; color: #11111185;">@{{ current_user.username }}</a>
+                </p>
+                <a href="{{ url_for('logout') }}" class="btn logout-btn">Logout</a>
+            </div>
+        </section>
+
+
+        <section id="tweet-section">
+
+            <div style="position: absolute; top: 0px; left: 20px;">
+                 <h2>
+                    <a href="{{ url_for('show_all_tweet') }}">
+                        <i class="fa-solid fa-arrow-left" style="margin-right: 20px;"></i> All Musk
+                    </a>
+                </h2>
+            </div>
+
+            <div class="tweet">
+                <p class="tweet_author">
+                    <a href="{{ url_for('profile', username=tweet.author.username) }}" style="font-size: 1.2rem;">@{{ tweet.author.username }}</a>
+                </p>
+        
+                <p class="tweet_body">{{ tweet.body }}</p>
+        
+                <span class="tweet_date">{{ tweet.created_at.strftime('%I:%S %p - %d %b %Y') }}</span>
+            </div>
+
+            <div class="tweet_stats">
+                {% if tweet.is_liked(current_user.id) %}
+                    <a href="{{ url_for('remove_like', id=tweet.id) }}" class="likes">
+                        <i class="fa-solid fa-heart" style="color: red"></i>
+                        <span>{{ tweet.count_likes() }}</span>
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('add_like', id=tweet.id) }}" class="likes">
+                        <i class="fa fa-heart-o" style="color: red"></i>
+                        <span>{{ tweet.count_likes() }}</span>
+                    </a>
+                {% endif %}
+                <a href="{{url_for('show_tweet_details', id=tweet.id )}}"> 
+                    <i class="fa fa-comment-o"></i>
+                    <span>{{ tweet.count_comments() }}</span>
+                </a>
+            </div>
+
+            <div class="tweet_comments">
+                <div>
+                    <form action="{{ url_for('add_comment', id=tweet.id) }}" method="POST" novalidate>
+                        {{ comment_form.csrf_token }}
+                        {{ comment_form.body(class='comment_input', placeholder='Your comment goes here') }}
+                        {{comment_form.submit(class='btn comment_btn')}}
+                    </form>
+                </div>
+                
+                {% if tweet.comments %}
+                    {% for comment in tweet.comments %}
+                        <div class="comment">
+                            <p class="comment_author">
+                                <a href="{{ url_for('profile', username=comment.author.username) }}" style="font-size: 1.2rem;">@{{ comment.author.username }}</a>
+
+                                <i class="fa-solid fa-circle" style="font-size: .3rem;"></i>
+                                
+                                <span class="comment_date"> {{ comment.created_at.strftime('%I:%S %p - %d %b %Y') }}</span>
+                            </p>
+                    
+                            <p class="comment_body">{{ comment.body }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <span></span>
+                {% endif %}
+            </div>
+
+        </section>
+    
+    
+       
+    
+    
+        <section id="action-section">
+            <div class="profile">
+                <p>
+                    <span style="text-transform: capitalize; font-weight: bold; display: block;">{{ tweet.author.username }}</span>
+                    <a href="{{ url_for('profile', username=tweet.author.username) }}" style="font-weight: lighter; color: #11111185;">@{{ tweet.author.username }}</a>
+                </p>
+
+                {% if not current_user == tweet.author %}
+
+                    {% if tweet.author.is_followed_by(current_user.id) %}
+                        <a href="{{url_for('unfollow', username=tweet.author.username)}}" class="btn follow-btn" style="background-color: red;">Unfollow</a>
+                    {% else %}
+                        <a href="{{url_for('follow', username=tweet.author.username)}}" class="btn follow-btn" style="background-color: #19A7CE;">Follow</a>
+                    {% endif %}
+
+                {% endif %}
+            </div>
+        </section>
+    </div>
+
+
+{% endblock %}
