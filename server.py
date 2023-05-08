@@ -372,4 +372,4 @@ def delete_tweet(id):
     return redirect(url_for('show_all_tweet'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0')
