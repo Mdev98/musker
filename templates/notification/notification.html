@@ -45,6 +45,27 @@
             animation: fill 3s .5s ease-in;
         }
 
+        @media (max-width: 900px) {
+            .notification {
+                font-family: 'Space mono';
+                position: absolute;
+                bottom: 90px;
+                right: 50px;
+                left: 50px;
+                text-align: center;
+                color: #111;
+                padding: 20px 40px;
+                transform: translateY(30px);
+                visibility: hidden;
+                opacity: 0;
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.403);
+                animation: fade 3s ease-in forwards;
+                background-color: #3250bf;
+                color: #fff;
+                z-index: 10000;
+            }
+        }
+
         @keyframes fade {
             5% {
                 opacity: 1;
