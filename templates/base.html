@@ -26,6 +26,10 @@
                 text-decoration: none;
             }
 
+            h4 {
+                display: none;
+            }
+
             .btn {
                 padding: 10px 30px;
                 border-radius: 20px;
@@ -211,7 +215,7 @@
 
             #action-section .profile {
                 width: fit-content;
-                margin: auto;
+                margin: 0px 0px 0px 50px;
                 padding: 50px;
                 box-shadow: 0px 0px 5px #19A7CE;
             }
@@ -290,6 +294,19 @@
                 font-weight: 500;
                 font-size: 1.2rem;
             }
+
+            @media (max-width:1200px) {
+                main {
+                    display: none;
+                }
+
+                h4 {
+                    display: block;
+                    font-size: 5rem;
+                    width: fit-content;
+                    margin: auto;
+                }
+            }
         </style>
     </head>
     <body>
@@ -298,6 +315,8 @@
                 {% include './notification/notification.html' %}
             {% endif %}
         {% endwith %}
+
+        <h4>MOBILE VERSION NOT AVAILABLE</h4>
 
         <main>
             {% block content %}

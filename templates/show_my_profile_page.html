@@ -1,32 +1,124 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div>
-        <p>{{user.username}}</p>
-        
-        <p><strong>Join at</strong> : {{user.created_at.strftime('%B %Y')}}</p>
 
-        <p>{{user.count_following()}} <strong>Abonnements</strong> {{user.count_follower()}} <strong>Abonnés</strong></p>        
-    </div>
+    <div class="wrapper">
+        <section id="profile-section">
+            <div class="logo">
+                <img src="../../static/images/musk-logo.png" alt="">
+            </div>
+    
+            <div class="profile">
+                <p>
+                    <span style="text-transform: capitalize; font-weight: bold; display: block;">{{ current_user.username }}</span>
+                    <a href="{{ url_for('profile', username=current_user.username) }}" style="font-weight: lighter; color: #11111185;">@{{ current_user.username }}</a>
+                </p>
+                <a href="{{ url_for('logout') }}" class="btn logout-btn">Logout</a>
+            </div>
+        </section>
 
-    <div>
-        {% if user.tweet %}
-            
+
+        <section id="tweet-section">
+            <div style="position: absolute; top: 0px; left: 20px;">
+                 <h2>
+                    <a href="{{ url_for('show_all_tweet') }}">
+                        <i class="fa-solid fa-arrow-left" style="margin-right: 20px;"></i> {{ user.username }}
+                    </a>
+                </h2>
+            </div>
+
             {% for tweet in user.tweet %}
 
-            <div style="width: 500px; margin: 40px auto; box-shadow: 0px 0px 5px rgba(140, 161, 255, 0.5); padding: 10px;">
-                <p style="display: flex; justify-content: space-between;">
-                    <span style="font-weight: lighter;">{{ tweet.author.username }}</span>
-                    <span style="font-weight: lighter;">{{ tweet.created_at.strftime('%Y-%m-%d') }}</span>
-                </p>
-                <p style="margin: 20px 0px; font-weight: bold; font-size: 1.3rem;">{{ tweet.body }}</p>
                 
-            </div>
-            {% endfor %}
+                <div class="tweet">
+                    <p class="tweet_author">
+                        <a href="{{ url_for('profile', username=tweet.author.username) }}" style="font-size: 1.2rem;">@{{ tweet.author.username }}</a>
+                    </p>
             
-        {% else %}
-            <p>You haven't tweet yet</p>
-        {% endif%}
+                    <p class="tweet_body">{{ tweet.body }}</p>
+            
+                    <span class="tweet_date">{{ tweet.created_at.strftime('%I:%S %p - %d %b %Y') }}</span>
+                </div>
+
+                <div class="tweet_stats">
+                    {% if tweet.is_liked(current_user.id) %}
+                        <a href="{{ url_for('remove_like', id=tweet.id) }}" class="likes">
+                            <i class="fa-solid fa-heart" style="color: red"></i>
+                            <span>{{ tweet.count_likes() }}</span>
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('add_like', id=tweet.id) }}" class="likes">
+                            <i class="fa fa-heart-o" style="color: red"></i>
+                            <span>{{ tweet.count_likes() }}</span>
+                        </a>
+                    {% endif %}
+                    <a href="{{url_for('show_tweet_details', id=tweet.id )}}"> 
+                        <i class="fa fa-comment-o"></i>
+                        <span>{{ tweet.count_comments() }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </section>
+
+            
+
+            
+
+    
+    
+       
+    
+    
+        <section id="action-section">
+            <div class="profile">
+
+                <p>
+                    <span style="text-transform: capitalize; font-weight: bold; display: block;">{{ user.username }}</span>
+                    <a href="{{ url_for('profile', username=user.username) }}" style="font-weight: lighter; color: #11111185;">@{{ user.username }}</a>
+
+                    <span style="display: block; font-weight: lighter; margin: 10px 0px;"><strong>{{user.count_following()}}</strong> abonnements  <strong>{{user.count_follower()}} </strong>abonnés</span>
+
+                    <span style="display: block;"><strong>Join at</strong> : {{user.created_at.strftime('%B %Y')}}</span>
+                </p>
+
+            </div>
+
+            <br>
+
+            <br>
+
+            {% if user.follower %}
+
+                <div class="follower-group" style="margin-left: 50px;">
+                    
+                    {% for follower in user.follower %}
+
+                        {% if not current_user == follower %}
+
+                            <div class="follower">
+                                <p>
+                                    <span style="text-transform: capitalize; font-weight: bold; display: block;">{{ follower.username }}</span>
+                                    <a href="{{ url_for('profile', username=follower.username) }}" style="font-weight: lighter; color: #11111185;">@{{ follower.username }}</a>
+                                </p>
+            
+                                {% if follower.is_followed_by(current_user.id) %}
+                                    <a href="{{url_for('unfollow', username=follower.username)}}" class="btn follow-btn" style="background-color: red;">Unfollow</a>
+                                {% else %}
+                                    <a href="{{url_for('follow', username=follower.username)}}" class="btn follow-btn" style="background-color: #19A7CE;">Follow</a>
+                                {% endif %}
+                            </div>
+
+                        {% endif %}
+                        
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+                
+        </section>
     </div>
+
 
 {% endblock %}

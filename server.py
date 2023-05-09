@@ -367,9 +367,9 @@ def delete_tweet(id):
     if current_user == tweet.author:
         db.session.delete(tweet)
         db.session.commit()
-        flash('Your musk has been deleted !')
+        flash('Musk deleted !')
     
     return redirect(url_for('show_all_tweet'))
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
